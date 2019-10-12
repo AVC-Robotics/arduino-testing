@@ -7,10 +7,10 @@ Servo right;
 
 void setup()
 {
-  left.attach(10);
-  right.attach(9);
-  left.write(0); // go counterclockwise full speed
-  right.write(180); // go clockwise full speed
+  left.attach(7);
+  right.attach(8);
+  left.write(90); // go counterclockwise full speed
+  right.write(90); // go clockwise full speed
 }
 
 void loop() {

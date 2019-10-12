@@ -10,7 +10,7 @@
  *      GND: GND
  */
  
-int trigPin = 11;    // Trigger
+int trigPin = 13;    // Trigger
 int echoPin = 12;    // Echo
 long duration, cm, inches;
  
