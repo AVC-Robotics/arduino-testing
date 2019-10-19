@@ -9,8 +9,8 @@ void setup()
 {
   left.attach(7);
   right.attach(8);
-  left.write(90); // go counterclockwise full speed
-  right.write(90); // go clockwise full speed
+  left.write(90-20); // go counterclockwise full speed
+  right.write(90+20); // go clockwise full speed
 }
 
 void loop() {
