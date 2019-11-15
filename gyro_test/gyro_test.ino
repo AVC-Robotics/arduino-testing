@@ -1,49 +1,34 @@
-// https://www.how2electronics.com/measure-tilt-angle-using-mpu6050-gyro-accelerometer-arduino/
+// Code from https://github.com/hideakitai/MPU9250/blob/master/examples/simple/simple.ino
 
-#include<Wire.h>
+#include <MPU9250.h>
 
-const int MPU_addr=0x68;
-int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
+MPU9250 mpu;
 
-int minVal=265;
-int maxVal=402;
+void setup()
+{
+    Serial.begin(115200);
 
-double x;
-double y;
-double z;
+    Wire.begin();
 
-void setup(){
-Wire.begin();
-Wire.beginTransmission(MPU_addr);
-Wire.write(0x6B);
-Wire.write(0);
-Wire.endTransmission(true);
-Serial.begin(9600);
+    delay(2000);
+    mpu.setup();
 }
-void loop(){
-Wire.beginTransmission(MPU_addr);
-Wire.write(0x3B);
-Wire.endTransmission(false);
-Wire.requestFrom(MPU_addr,14,true);
-AcX=Wire.read()<<8|Wire.read();
-AcY=Wire.read()<<8|Wire.read();
-AcZ=Wire.read()<<8|Wire.read();
-int xAng = map(AcX,minVal,maxVal,-90,90);
-int yAng = map(AcY,minVal,maxVal,-90,90);
-int zAng = map(AcZ,minVal,maxVal,-90,90);
 
-x= RAD_TO_DEG * (atan2(-yAng, -zAng)+PI);
-y= RAD_TO_DEG * (atan2(-xAng, -zAng)+PI);
-z= RAD_TO_DEG * (atan2(-yAng, -xAng)+PI);
+void loop()
+{
+    static uint32_t prev_ms = millis();
+    if ((millis() - prev_ms) > 16)
+    {
+        mpu.update();
+        mpu.print();
 
-Serial.print("AngleX= ");
-Serial.println(x);
+        Serial.print("roll  (x-forward (north)) : ");
+        Serial.println(mpu.getRoll());
+        Serial.print("pitch (y-right (east))    : ");
+        Serial.println(mpu.getPitch());
+        Serial.print("yaw   (z-down (down))     : ");
+        Serial.println(mpu.getYaw());
 
-Serial.print("AngleY= ");
-Serial.println(y);
-
-Serial.print("AngleZ= ");
-Serial.println(z);
-Serial.println("-----------------------------------------");
-delay(400);
+        prev_ms = millis();
+    }
 }
