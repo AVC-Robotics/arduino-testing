@@ -5,13 +5,13 @@
 *
 *  Ultrasonic sensor Pins:
 *      VCC: +5VDC
-*      Trig : Trigger (INPUT) - Pin11
+*      Trig : Trigger (INPUT) - Pin 11
 *      Echo: Echo (OUTPUT) - Pin 12
 *      GND: GND
 */
 
-int trigPin = 12;    // Trigger
-int echoPin = 13;    // Echo
+int trigPin = 11;    // Trigger
+int echoPin = 12;    // Echo
 
 void setup() {
     //Serial Port begin
